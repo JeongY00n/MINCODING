@@ -15,17 +15,18 @@ int main()
     cout.tie();
 
     int map[5][4] = { 0 };
-    int ok = 0, k = 4;
     int new_map[5][4] = { 0 };
+    int ok = 0, k = 4;
+    int cnt = 0;
+
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 4; j++) 
             cin >> map[i][j];
     }
 
 
-    int cnt = 0;
-
-
+   
+    //new_map 사용하지말고 재정렬방법으로 다시 생각해보기
     for (int i = 4; i >=0; i--) {
         ok = 0;
         for (int j = 0; j < 4; j++) {
