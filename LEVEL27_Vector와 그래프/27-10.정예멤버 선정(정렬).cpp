@@ -7,13 +7,6 @@
 using namespace std;
 
 
-
-//트리 Tree-> 임의 점 두개를 연결하는 가장 짧은 경로가 유일하다
-//NODE = n개, EDGE = n-1개
-//첫 NODE를 제외한 나머지 NODE들은 EDGE를 가지고 있으므로
-//EDGE의 개수는 n-1개가 된다
-
-
 int main()
 {
     ios_base::sync_with_stdio(false);
