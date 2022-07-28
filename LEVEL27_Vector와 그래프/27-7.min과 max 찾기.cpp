@@ -22,7 +22,7 @@ int main()
     cin >> mx;
     
     for (int i = 0; i < 6; i++) {
-        
+        //min, max값 초기화 필요
         int min = 100, min_index = 0, max = 0, max_index = 0;
         
         if (mx[i] == 'm') {
