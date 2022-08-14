@@ -11,7 +11,7 @@ struct Edge {
     int cnt;
 };
 
-struct cmdstruct {
+struct cmpstruct {
     bool operator()(Edge A, Edge B) {
         if (A.cost < B.cost)return false;
         if (A.cost > B.cost)return true;
@@ -32,11 +32,11 @@ struct cmdstruct {
 
 
 vector<Edge> v[101];
-priority_queue<Edge, vector<Edge>, cmdstruct> pq;
+priority_queue<Edge, vector<Edge>, cmpstruct> pq;
 int N, M, A, B, C, D, E;
 void dijkstra() {
 
-    //dist¸¦ ÀÌÁßfor¹®À¸·Î µÎÁö¸»°í dist[], cnt[]·Î °è»êÇØµµ µÈ´Ù
+    //distë¥¼ ì´ì¤‘forë¬¸ìœ¼ë¡œ ë‘ì§€ë§ê³  dist[], cnt[]ë¡œ ê³„ì‚°í•´ë„ ëœë‹¤
     int dist_cost[101][101] = {0};
     for (int i = 1; i <= N; i++)
         for (int j = 1; j <= N; j++)
@@ -70,8 +70,8 @@ void dijkstra() {
                 if (dist_cost[next.to][next.cnt] <= dist_cost[nowTo][nowCnt] + next.cost) continue;
                 dist_cost[next.to][next.cnt] = dist_cost[nowTo][nowCnt] + next.cost;
             }
-            // cost¸¦ °»½ÅÇÏ´Â ÀÌÀ¯´Â ½ÃÀÛÁ¡¿¡¼­ Æ¯Á¤ ³ëµå±îÁöÀÇ cost°ªÀ¸·Î ´ÙÀ½ ³ëµå±îÁöÀÇ cost°ªÀ» ±¸ÇØÁÖ±â À§ÇÔ
-            // ±âÁ¸ cost°ªÀº °£¼± ÇÏ³ª¿¡ ´ëÇÑ °ª
+            // costë¥¼ ê°±ì‹ í•˜ëŠ” ì´ìœ ëŠ” ì‹œì‘ì ì—ì„œ íŠ¹ì • ë…¸ë“œê¹Œì§€ì˜ costê°’ìœ¼ë¡œ ë‹¤ìŒ ë…¸ë“œê¹Œì§€ì˜ costê°’ì„ êµ¬í•´ì£¼ê¸° ìœ„í•¨
+            // ê¸°ì¡´ costê°’ì€ ê°„ì„  í•˜ë‚˜ì— ëŒ€í•œ ê°’
             pq.push({ next.to, dist_cost[next.to][next.cnt], next.add_cost, next.time, nowCnt + 1 });
             
             
@@ -81,7 +81,7 @@ void dijkstra() {
 
     }
 
-    //min °ª Å°¿ì±â
+    //min ê°’ í‚¤ìš°ê¸°
     int min = 99999999, min_index=0, check = 0;
     for (int i = 1; i <= N; i++) {
         //cout << dist_cost[N][i] << endl;
