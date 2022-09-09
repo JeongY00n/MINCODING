@@ -1,58 +1,60 @@
-#include <iostream>
-#include <string>
-#include <vector>
+#include<iostream>
 #include<algorithm>
+#include<queue>
+#include<string>
 using namespace std;
 
 struct Edge {
-    int to, cost;
+	int to, cost;
 };
 
-
-int N, node1, node2;
+int n, robot1, robot2;
 vector<Edge> v[100001];
-int visited[100001] = { 0 };
 int maxi = 0;
-
-int dfs(int now) 
+int ans = 0;
+int check[100001] = { 0 };
+void dfs(int now, int dist)
 {
-    int ans = 0;
-    visited[now] = 1;
+	vector<Edge> vnow = v[now];
 
-    for (int i = 0; i < v[now].size(); i++) 
-    {
-        int to = v[now][i].to;
-        int cost = v[now][i].cost;
+	if (now == robot2)
+	{
+		ans = dist - maxi;
+		return;
+	}
 
-        if (visited[to] == 1) continue;
 
-        ans = dfs(to);
-        if (ans > 0 || to == node2)
-        {
-            maxi = max(maxi, cost);
-            ans += cost;
-            break;
-        }
-    }
-    return ans;
+	for (int i = 0; i < vnow.size(); i++)
+	{
+		if (check[vnow[i].to] == 1)continue;
+
+		if (vnow[i].cost > maxi)
+			maxi = vnow[i].cost;
+
+		check[vnow[i].to] = 1;
+
+		dfs(vnow[i].to, dist + vnow[i].cost);
+
+		check[vnow[i].to] = 0;
+	}
+
 }
+
+
 
 int main() {
 
-    
-    cin >> N >> node1 >> node2;
+	cin >> n >> robot1 >> robot2;
+	for (int i = 0; i < n - 1; i++) {
+		int from, to, cost;
+		cin >> from >> to >> cost;
 
-    for (int i = 0; i < N - 1; i++) {
-        int from, to, cost;
-        cin >> from >> to >> cost;
-        v[from].push_back({ to, cost });
-        v[to].push_back({ from, cost });
-    }
+		v[from].push_back({ to, cost });
+		v[to].push_back({ from, cost });
+	}
 
-    int dist = dfs(node1);
-    int ans = dist - maxi;
+	check[robot1] = 1;
+	dfs(robot1, 0);
+	cout << ans;
 
-    cout << ans;
-
-    return 0;
 }
