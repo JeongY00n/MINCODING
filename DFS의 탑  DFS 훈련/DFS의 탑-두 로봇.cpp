@@ -9,13 +9,13 @@ struct Edge {
 };
 
 int n, robot1, robot2;
-vector<Edge> v[100001];
+vector<pair<int, int>> v[100001];
 int maxi = 0;
 int ans = 0;
 int check[100001] = { 0 };
 void dfs(int now, int dist)
 {
-	vector<Edge> vnow = v[now];
+	vector<pair<int, int>> vnow = v[now];
 
 	if (now == robot2)
 	{
@@ -26,16 +26,17 @@ void dfs(int now, int dist)
 
 	for (int i = 0; i < vnow.size(); i++)
 	{
-		if (check[vnow[i].to] == 1)continue;
+		if (check[vnow[i].first] == 0) {
 
-		if (vnow[i].cost > maxi)
-			maxi = vnow[i].cost;
+			if (vnow[i].second > maxi)
+				maxi = vnow[i].second;
 
-		check[vnow[i].to] = 1;
+			check[vnow[i].first] = 1;
 
-		dfs(vnow[i].to, dist + vnow[i].cost);
+			dfs(vnow[i].first, dist + vnow[i].second);
 
-		check[vnow[i].to] = 0;
+			check[vnow[i].first] = 0;
+		}
 	}
 
 }
@@ -45,6 +46,7 @@ void dfs(int now, int dist)
 int main() {
 
 	cin >> n >> robot1 >> robot2;
+
 	for (int i = 0; i < n - 1; i++) {
 		int from, to, cost;
 		cin >> from >> to >> cost;
